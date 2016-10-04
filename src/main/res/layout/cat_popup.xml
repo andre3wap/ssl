@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp">
+
+        <TextView
+            android:text="Category Name: (eg. Supermarket, Hardware)"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView8" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Name"
+            android:ems="10"
+            android:id="@+id/cat_txt1"
+            android:layout_marginTop="27dp"
+            android:layout_below="@+id/textView8"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:text="Save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:id="@+id/button2"
+            android:layout_below="@+id/cat_txt1"
+            android:layout_alignRight="@+id/cat_txt1"
+            android:layout_alignEnd="@+id/cat_txt1"
+            android:layout_marginRight="34dp"
+            android:layout_marginEnd="34dp" />
+    </RelativeLayout>
+</LinearLayout>

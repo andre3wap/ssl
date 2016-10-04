@@ -25,7 +25,7 @@ import com.andre3.smartshopperslist.views.PopupBuilder;
  */
 public class MainMenu extends Fragment {
 
-    Button btn, listtype_btn;
+    Button btn, list_btn, cat_btn, store_btn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,8 +35,9 @@ public class MainMenu extends Fragment {
 
 
         // Buttons
-        btn = (Button)view.findViewById(R.id.button);
-        listtype_btn = (Button)view.findViewById(R.id.button2);
+        list_btn = (Button)view.findViewById(R.id.list_btn);
+        cat_btn = (Button)view.findViewById(R.id.cat_btn);
+        store_btn = (Button)view.findViewById(R.id.store_btn);
 
         // Views
         ListView lv = (ListView)view.findViewById(R.id.ListV);
@@ -71,21 +72,36 @@ public class MainMenu extends Fragment {
         });
 
         ///Launch popup for List type button
-        listtype_btn.setOnClickListener(new View.OnClickListener() {
+        list_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                dialogBox();
+                PopupBuilder dialog = new PopupBuilder(getContext(), "Store Title", "list");
+                dialog.displyListForm().show();
+            }
+        });
+
+        store_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                PopupBuilder dialog = new PopupBuilder(getContext(), "Store Title", "store");
+                dialog.displyStoreForm().show();
 
             }
         });
 
+        cat_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                PopupBuilder dialog = new PopupBuilder(getContext(), "Store Title", "cat");
+                dialog.displyCatForm().show();
+
+            }
+        });
         return view;
     }
 
-    public void dialogBox() {
-        PopupBuilder dialog = new PopupBuilder(getContext(), "Store Title", "store");
-        dialog.displyDialog().show();
-    }
 
 }
