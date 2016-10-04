@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Smart Shoppers List</string>
+
+    <string name="store_name">Store Name:</string>
+    <string name="store_">Store Name:</string>
+    <string name="store_no">Store Number:</string>
+    <string name="store_loc">Store Location:</string>
+
+</resources>
