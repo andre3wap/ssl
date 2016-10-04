@@ -12,7 +12,7 @@ import com.andre3.smartshopperslist.models.CategoryMdl;
 import java.util.ArrayList;
 
 /**
- * Created by andrdde3 on 10/2/16.
+ * Created by andre3 on 10/2/16.
  */
 
 public class CategoryAdpr extends BaseAdapter {
