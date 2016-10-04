@@ -10,7 +10,11 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.andre3.smartshopperslist.R;
+import com.andre3.smartshopperslist.impl.CreateCatImpl;
+import com.andre3.smartshopperslist.impl.CreateListTypeImpl;
 import com.andre3.smartshopperslist.impl.CreateStoreImpl;
+import com.andre3.smartshopperslist.models.CategoryMdl;
+import com.andre3.smartshopperslist.models.ListTypeMdl;
 import com.andre3.smartshopperslist.models.StoreMdl;
 
 /**
@@ -58,15 +62,17 @@ public class PopupBuilder {
             @Override
             public void onClick(View v) {
 
+                // Get data from form
                 EditText store_txt1, store_txt2, store_txt3;
                 store_txt1 = (EditText)dialog.findViewById(R.id.store_txt1);
                 store_txt2 = (EditText)dialog.findViewById(R.id.store_txt2);
                 store_txt3 = (EditText)dialog.findViewById(R.id.store_txt3);
 
+                // Save data to database
                 StoreMdl data = new StoreMdl(store_txt1.getText().toString(), store_txt2.getText().toString(), store_txt3.getText().toString(), 0);
-
                 CreateStoreImpl dao = new CreateStoreImpl(context, data);
                 long id = dao.save();
+
                 dialog.dismiss();
             }
         });
@@ -83,7 +89,16 @@ public class PopupBuilder {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Catalog", Toast.LENGTH_LONG).show();
+
+                // Get data from form
+                EditText cat_txt1;
+                cat_txt1 = (EditText)dialog.findViewById(R.id.cat_txt1);
+
+                // Save data to database
+                CategoryMdl data = new CategoryMdl(0, cat_txt1.getText().toString());
+                final CreateCatImpl db = new CreateCatImpl(context, data);
+                db.save();
+
                 dialog.dismiss();
             }
         });
@@ -101,7 +116,17 @@ public class PopupBuilder {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "List type", Toast.LENGTH_LONG).show();
+
+                // Get data from form
+                EditText list_txt1;
+                list_txt1 = (EditText)dialog.findViewById(R.id.list_txt1);
+
+                //TODO: Pass category ID to list type 3rd param
+                // Save data to DB
+                ListTypeMdl data = new ListTypeMdl(0, list_txt1.getText().toString(), 0);
+                CreateListTypeImpl db = new CreateListTypeImpl(context, data);
+                db.save();
+
                 dialog.dismiss();
             }
         });

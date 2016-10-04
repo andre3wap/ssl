@@ -28,6 +28,7 @@ public class CreateList  extends Fragment {
         ListView lv = (ListView) view.findViewById(R.id.ListV);
         Bundle bd = getArguments();
 
+        // Get all list type by category ID
         ListTypeAdpr adapter = new ListTypeAdpr(getContext(), db.readData(bd.getInt("cat_id")));
 
         lv.setAdapter(adapter);
