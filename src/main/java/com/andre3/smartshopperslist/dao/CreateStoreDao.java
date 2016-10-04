@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by andre3 on 10/1/16.
  */
 public class CreateStoreDao extends SQLiteOpenHelper {
-
+//TODO: call this calls on startup so the DB and tables get created first.
 
     // DB table names
     private static String TABLE_NAME = "stores";
