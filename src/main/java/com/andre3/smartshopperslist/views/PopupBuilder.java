@@ -8,7 +8,7 @@ import android.widget.Switch;
 import com.andre3.smartshopperslist.R;
 
 /**
- * Created by ODBdddBROW on 10/4/2016.
+ * Created by ODBddddBROW on 10/4/2016.
  */
 
 public class PopupBuilder {
@@ -29,6 +29,9 @@ public class PopupBuilder {
         {
             case"store":
                 dialog.setContentView(R.layout.popup_layout1);
+                break;
+
+            case "category":
                 break;
         }
     }
