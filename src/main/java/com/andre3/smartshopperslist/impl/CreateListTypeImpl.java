@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class CreateListTypeImpl {
 
     Context context;
-    private static String TABLE_NAME = "listtype";
+    private static String TABLE_NAME = "list_type";
     ListTypeMdl listtypeObj;
     CreateListDao db;
 
@@ -36,17 +36,19 @@ public class CreateListTypeImpl {
 
         ContentValues values = new ContentValues();
         values.put("name",listtypeObj.getName());
+        values.put("cat_id",listtypeObj.getCatId());
 
         long id = dbw.insert(TABLE_NAME, null, values);
         dbw.close();
 
-        System.out.println("List Type: " + id);
+        System.out.println("List Type: " + listtypeObj.getCatId() + "-" + listtypeObj.getName());
         return id;
     }
+
     public ArrayList<ListTypeMdl> readData(int cat_id)
     {
         ArrayList<ListTypeMdl>  listtype = new ArrayList<>();
-        String sQuery = "SELECT * FROM " + TABLE_NAME + "WHERE cat_id ="+ cat_id;
+        String sQuery = "SELECT * FROM " + TABLE_NAME + " WHERE cat_id ="+ cat_id;
 
         SQLiteDatabase dbw = db.getReadableDatabase();
         Cursor c = dbw.rawQuery(sQuery, null);

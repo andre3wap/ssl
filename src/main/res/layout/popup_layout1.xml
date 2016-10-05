@@ -3,36 +3,56 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:padding="20dp">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:layout_below="@+id/textView10"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="18dp"
-        android:id="@+id/list_txt1" />
-
     <TextView
         android:text="List Type (eg. Meat, Snacks)"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:id="@+id/textView10"
+        android:id="@+id/textView14"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Choose Category:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="31dp"
+        android:id="@+id/textView10"
+        android:layout_above="@+id/button7"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:layout_marginTop="145dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/list_txt1"
+        android:layout_above="@+id/textView10"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="19dp" />
 
     <Button
         android:text="Save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="21dp"
-        android:layout_marginEnd="21dp"
         android:id="@+id/button7"
         android:background="@android:drawable/dialog_holo_light_frame"
-        android:layout_below="@+id/list_txt1"
+        android:layout_marginTop="21dp"
+        android:layout_below="@+id/spinner"
         android:layout_alignRight="@+id/list_txt1"
-        android:layout_alignEnd="@+id/list_txt1" />
+        android:layout_alignEnd="@+id/list_txt1"
+        android:layout_marginRight="11dp"
+        android:layout_marginEnd="11dp" />
 </RelativeLayout>

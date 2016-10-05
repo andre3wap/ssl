@@ -15,7 +15,7 @@ public class CreateStoreDao extends SQLiteOpenHelper {
     private static String TABLE_NAME = "stores";
     private static String TABLE_NAME1 = "items";
     private static String TABLE_NAME2 = "categories";
-    private static String TABLE_NAME3 = "listtype";
+    private static String TABLE_NAME3 = "list_type";
 
 
     // DB table columns
@@ -27,7 +27,7 @@ public class CreateStoreDao extends SQLiteOpenHelper {
     private static String COLUMN_SIZE = "size";
     private static String COLUMN_WEIGHT = "weight";
     private static String COLUMN_STORE = "store";
-    private static String COLUMN_LISTTYPE = "listtype";
+    private static String COLUMN_LISTTYPE = "listtype ";
     private static String COLUMN_CAT = "category";
     private static String COLUMN_NUMBER = "phone";
     private static String COLUMN_LCN = "address";
@@ -72,15 +72,18 @@ public class CreateStoreDao extends SQLiteOpenHelper {
 
     private static final String SQL_LIST_TBL =
             "CREATE TABLE " + TABLE_NAME3 + "(" +
-                    COLUMN_ID + " INTEGER PRIMARY KEY," +
-                    COLUMN_CATID + " "+TEXT_TYPE1+" "+
-                    COLUMN_NAME +" "+  TEXT_TYPE+")";
+                    COLUMN_ID + " INTEGER PRIMARY KEY, " +
+                    COLUMN_NAME +" "+  TEXT_TYPE+", " +
+                    COLUMN_CATID + " "+TEXT_TYPE1+")";
 
 
 
 
-    private static final String SQL_DELETE_ENTRIES =
-            "DROP TABLE IF EXISTS " + TABLE_NAME + "," + TABLE_NAME1+ "," + TABLE_NAME2 + "," + TABLE_NAME3;
+    private static final String SQL_DELETE_ENTRIES =  "DROP TABLE IF EXISTS " + TABLE_NAME;
+    private static final String SQL_DELETE_ENTRIES1 =  "DROP TABLE IF EXISTS " + TABLE_NAME1;
+    private static final String SQL_DELETE_ENTRIES2 =  "DROP TABLE IF EXISTS " + TABLE_NAME2;
+    private static final String SQL_DELETE_ENTRIES3 =  "DROP TABLE IF EXISTS " + TABLE_NAME3;
+
 
     public CreateStoreDao(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -90,16 +93,20 @@ public class CreateStoreDao extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
+        db.execSQL(SQL_LIST_TBL);
         db.execSQL(SQL_STORE_TBL);
         db.execSQL(SQL_ITEM_TBL);
         db.execSQL(SQL_CAT_TBL);
-        db.execSQL(SQL_LIST_TBL);
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
         db.execSQL(SQL_DELETE_ENTRIES);
+        db.execSQL(SQL_DELETE_ENTRIES1);
+        db.execSQL(SQL_DELETE_ENTRIES2);
+        db.execSQL(SQL_DELETE_ENTRIES3);
         onCreate(db);
     }
 }

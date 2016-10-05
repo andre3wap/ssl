@@ -4,8 +4,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.text.Layout;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -16,6 +18,8 @@ import com.andre3.smartshopperslist.impl.CreateStoreImpl;
 import com.andre3.smartshopperslist.models.CategoryMdl;
 import com.andre3.smartshopperslist.models.ListTypeMdl;
 import com.andre3.smartshopperslist.models.StoreMdl;
+
+import java.util.ArrayList;
 
 /**
  * Created by ODBddddBROW on 10/4/2016.
@@ -111,7 +115,27 @@ public class PopupBuilder {
         this.loadLayout(dialog);
         dialog.setTitle(this.dialogTitle);
 
+        final Spinner spinner;
+
         Button btn = (Button)dialog.findViewById(R.id.button7);
+
+        CategoryMdl data = new CategoryMdl(0, "Cat Name");
+        final CreateCatImpl db = new CreateCatImpl(context, data);
+
+
+        spinner = (Spinner) dialog.findViewById(R.id.spinner);
+
+        ArrayList arr = new ArrayList();
+
+        for (CategoryMdl temp : db.readData())
+        {
+            arr.add(temp.getCatId() +"-" +temp.getName());
+
+        }
+
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, arr);
+        spinner.setAdapter(adapter);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,11 +143,15 @@ public class PopupBuilder {
 
                 // Get data from form
                 EditText list_txt1;
+
                 list_txt1 = (EditText)dialog.findViewById(R.id.list_txt1);
+
+                String[] spinnerSPlt = spinner.getSelectedItem().toString().split("-");
+
 
                 //TODO: Pass category ID to list type 3rd param
                 // Save data to DB
-                ListTypeMdl data = new ListTypeMdl(0, list_txt1.getText().toString(), 0);
+                ListTypeMdl data = new ListTypeMdl(0, list_txt1.getText().toString(), Integer.parseInt(spinnerSPlt[0]));
                 CreateListTypeImpl db = new CreateListTypeImpl(context, data);
                 db.save();
 
