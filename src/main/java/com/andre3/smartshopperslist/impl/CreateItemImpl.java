@@ -47,7 +47,41 @@ public class CreateItemImpl {
         System.out.println("Item ID: " + id);
         return id;
     }
-    public ArrayList<AddItemMdl> readData()
+    public ArrayList<AddItemMdl> readData(int listTypeId)
+    {
+        ArrayList<AddItemMdl> items = new ArrayList<>();
+
+        String sQuery = "SELECT * FROM " + TABLE_NAME + " WHERE listtype ="+ listTypeId;
+
+        SQLiteDatabase dbw = db.getReadableDatabase();
+        Cursor c = dbw.rawQuery(sQuery, null);
+
+        if(c.moveToFirst())
+        {
+            do {
+                // Load with demo data, bad model class design ?
+                AddItemMdl data = new AddItemMdl(0,null,0,null,(float)0.0, "", (float)0.0, 0, 0,0);
+
+                data.setItemId(c.getInt(c.getColumnIndex("_id")));
+                data.setName(c.getString(c.getColumnIndex("name")));
+                data.setCat(c.getInt(c.getColumnIndex("category")));
+                data.setCost(c.getFloat(c.getColumnIndex("cost")));
+                data.setIsle(c.getString(c.getColumnIndex("isle")));
+                data.setQty(c.getInt(c.getColumnIndex("qty")));
+                data.setSize(c.getString(c.getColumnIndex("size")));
+                data.setListtype(c.getInt(c.getColumnIndex("listtype")));
+                data.setWeight(c.getFloat(c.getColumnIndex("weight")));
+                data.setStore(c.getInt(c.getColumnIndex("store")));
+
+                items.add(data);
+
+            }while(c.moveToNext());
+        }
+
+        return items;
+    }
+
+    public ArrayList<AddItemMdl> readAllData()
     {
         ArrayList<AddItemMdl> items = new ArrayList<>();
 
@@ -60,7 +94,7 @@ public class CreateItemImpl {
         {
             do {
                 // Load with demo data, bad model class design ?
-                AddItemMdl data = new AddItemMdl(0,null,0,null,(float)0.0, 0, (float)0.0, 0, 0,0);
+                AddItemMdl data = new AddItemMdl(0,null,0,null,(float)0.0, "", (float)0.0, 0, 0,0);
 
                 data.setItemId(c.getInt(c.getColumnIndex("_id")));
                 data.setName(c.getString(c.getColumnIndex("name")));
@@ -68,7 +102,7 @@ public class CreateItemImpl {
                 data.setCost(c.getFloat(c.getColumnIndex("cost")));
                 data.setIsle(c.getString(c.getColumnIndex("isle")));
                 data.setQty(c.getInt(c.getColumnIndex("qty")));
-                data.setSize(c.getInt(c.getColumnIndex("size")));
+                data.setSize(c.getString(c.getColumnIndex("size")));
                 data.setListtype(c.getInt(c.getColumnIndex("listtype")));
                 data.setWeight(c.getFloat(c.getColumnIndex("weight")));
                 data.setStore(c.getInt(c.getColumnIndex("store")));

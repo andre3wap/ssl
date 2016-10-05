@@ -2,6 +2,9 @@ package com.andre3.smartshopperslist.views;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Layout;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -13,8 +16,10 @@ import android.widget.Toast;
 
 import com.andre3.smartshopperslist.R;
 import com.andre3.smartshopperslist.impl.CreateCatImpl;
+import com.andre3.smartshopperslist.impl.CreateItemImpl;
 import com.andre3.smartshopperslist.impl.CreateListTypeImpl;
 import com.andre3.smartshopperslist.impl.CreateStoreImpl;
+import com.andre3.smartshopperslist.models.AddItemMdl;
 import com.andre3.smartshopperslist.models.CategoryMdl;
 import com.andre3.smartshopperslist.models.ListTypeMdl;
 import com.andre3.smartshopperslist.models.StoreMdl;
@@ -53,7 +58,14 @@ public class PopupBuilder {
             case "store":
                 dialog.setContentView(R.layout.store_popup);
                 break;
+            case "item":
+                dialog.setContentView(R.layout.item_popup);
+                break;
         }
+    }
+
+    public Context getContext() {
+        return context;
     }
 
     public Dialog displyStoreForm() {
@@ -104,6 +116,8 @@ public class PopupBuilder {
                 db.save();
 
                 dialog.dismiss();
+
+
             }
         });
 
@@ -159,5 +173,99 @@ public class PopupBuilder {
             }
         });
         return dialog;
+    }
+
+    public Dialog displyItemForm() {
+        final Dialog dialog = new Dialog(this.context);
+        this.loadLayout(dialog);
+        dialog.setTitle(this.dialogTitle);
+
+        final Spinner spinner2, spinner3, spinner4, spinner5;
+        Button btn;
+
+        btn = (Button)dialog.findViewById(R.id.button6);
+        spinner2 = (Spinner) dialog.findViewById(R.id.spinner2);
+        spinner3 = (Spinner) dialog.findViewById(R.id.spinner3);
+        spinner4 = (Spinner) dialog.findViewById(R.id.spinner4);
+        spinner5 = (Spinner) dialog.findViewById(R.id.spinner5);
+
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, readStore());
+        spinner3.setAdapter(adapter);
+
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, readList());
+        spinner4.setAdapter(adapter2);
+
+        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, readCat());
+        spinner5.setAdapter(adapter3);
+
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Get data from form
+                EditText item_txt1, item_txt2, item_txt3, item_txt4, item_txt5;
+                item_txt1 = (EditText)dialog.findViewById(R.id.item_txt1);
+                item_txt2 = (EditText)dialog.findViewById(R.id.item_txt2);
+                item_txt3 = (EditText)dialog.findViewById(R.id.item_txt3);
+                item_txt4 = (EditText)dialog.findViewById(R.id.item_txt4);
+                item_txt5 = (EditText)dialog.findViewById(R.id.item_txt5);
+
+                ////String[] spinnerSPlt2 = spinner2.getSelectedItem().toString().split("-");
+                String[] spinnerSPlt3 = spinner3.getSelectedItem().toString().split("-");
+                String[] spinnerSPlt4 = spinner4.getSelectedItem().toString().split("-");
+                String[] spinnerSPlt5 = spinner5.getSelectedItem().toString().split("-");
+
+                // Save data to database
+                    AddItemMdl data = new  AddItemMdl( 1, item_txt1.getText().toString(), Integer.parseInt(item_txt3.getText().toString()),
+                            item_txt5.getText().toString(), (float)Integer.parseInt(item_txt2.getText().toString()), "Medium",
+                            (float)Integer.parseInt(item_txt4.getText().toString()), Integer.parseInt(spinnerSPlt3[0]), Integer.parseInt(spinnerSPlt4[0]), Integer.parseInt(spinnerSPlt5[0]));
+                    CreateItemImpl db = new CreateItemImpl(getContext(), data);
+                db.save();
+
+                dialog.dismiss();
+            }
+        });
+
+        return dialog;
+    }
+
+    public ArrayList<String> readCat(){
+
+        CategoryMdl data = new CategoryMdl(0, null);
+        final CreateCatImpl cat_db = new CreateCatImpl(context, data);
+
+        ArrayList arr = new ArrayList();
+
+        for (CategoryMdl temp : cat_db.readData()){
+            arr.add(temp.getCatId() +"-" +temp.getName());
+        }
+        return arr;
+    }
+
+    public ArrayList<String> readStore(){
+
+        StoreMdl data = new StoreMdl(null, null, null, 0);
+        CreateStoreImpl dao = new CreateStoreImpl(getContext(), data);
+
+        ArrayList arr = new ArrayList();
+
+        for (StoreMdl temp : dao.readData()){
+            arr.add(temp.getStoreId() +"-" +temp.getStoreName());
+        }
+        return arr;
+    }
+    public ArrayList<String> readList(){
+
+        ListTypeMdl data = new ListTypeMdl(0, null, 0);
+        final CreateListTypeImpl db = new CreateListTypeImpl(getContext(), data);
+
+        ArrayList arr = new ArrayList();
+
+        for (ListTypeMdl temp : db.readDataAll()){
+            arr.add(temp.getListId() +"-" +temp.getName());
+        }
+        return arr;
     }
 }

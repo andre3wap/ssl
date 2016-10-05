@@ -68,7 +68,7 @@ public class MainMenu extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putInt("store_id", dao.readData().get(position).getStoreId());
                 csf.setArguments(bundle);
-                tran.replace(R.id.fragment_container, csf).addToBackStack(null).commit();
+                tran.replace(R.id.fragment_container, csf, "Test_tag").addToBackStack(null).commit();
 
 
             }
@@ -101,16 +101,16 @@ public class MainMenu extends Fragment {
         switch (item.getItemId()) {
 
             case R.id.action_store:
-                PopupBuilder dialog = new PopupBuilder(getContext(), "Store Title", "store");
+                PopupBuilder dialog = new PopupBuilder(getContext(), "Create a Store", "store");
                 dialog.displyStoreForm().show();
                 break;
 
             case R.id.action_cat:
-                PopupBuilder dialog1 = new PopupBuilder(getContext(), "Store Title", "cat");
+                PopupBuilder dialog1 = new PopupBuilder(getContext(), "Create a Category", "cat");
                 dialog1.displyCatForm().show();
                 break;
             case R.id.action_list:
-                PopupBuilder dialog2 = new PopupBuilder(getContext(), "Store Title", "list");
+                PopupBuilder dialog2 = new PopupBuilder(getContext(), "Create an Item List", "list");
                 dialog2.displyListForm().show();
                 break;
         }

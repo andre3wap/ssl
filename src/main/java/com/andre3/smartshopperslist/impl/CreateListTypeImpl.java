@@ -68,7 +68,7 @@ public class CreateListTypeImpl {
         return listtype;
     }
 
-    public ArrayList<ListTypeMdl> readDataCount()
+    public ArrayList<ListTypeMdl> readDataAll()
     {
         ArrayList<ListTypeMdl>  listtype = new ArrayList<>();
         String sQuery = "SELECT * FROM " + TABLE_NAME;

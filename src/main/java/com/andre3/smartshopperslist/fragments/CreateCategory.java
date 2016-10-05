@@ -43,8 +43,6 @@ public class CreateCategory extends Fragment{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-                System.out.println("Clicked");
-
                 CreateList cl = new CreateList();
 
                 FragmentTransaction tran = getFragmentManager().beginTransaction();
