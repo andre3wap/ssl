@@ -49,15 +49,29 @@ public class ExpandableListType extends BaseExpandableListAdapter {
         final String childText = (String) getChild(groupPosition, childPosition);
 
         if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this._context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater infalInflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.list_item, null);
         }
 
-        TextView txtListChild = (TextView) convertView
-                .findViewById(R.id.lblListItem);
+        TextView txtListChild1 = (TextView) convertView.findViewById(R.id.lblListItem);
+        TextView txtListChild2 = (TextView) convertView.findViewById(R.id.price_tv);
+        TextView txtListChild3 = (TextView) convertView.findViewById(R.id.qty_tv);
+        TextView txtListChild4 = (TextView) convertView.findViewById(R.id.isle_tv);
 
-        txtListChild.setText(childText);
+
+        ///Format: id/name/price/qty/isle
+        String childTitle[] = childText.split("/");
+
+        if(!childTitle[1].isEmpty()) {
+            txtListChild1.setText(childTitle[0] + " - " +childTitle[1]);
+        }if(!childTitle[2].isEmpty()){
+            txtListChild2.setText("P: " + childTitle[2]);
+        }if(!childTitle[3].isEmpty()){
+            txtListChild3.setText("Q: " +childTitle[3]);
+        }if(!childTitle[4].isEmpty()){
+            txtListChild4.setText("Isle: " +childTitle[4]);
+        }
+
         return convertView;
     }
 
@@ -85,16 +99,16 @@ public class ExpandableListType extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
+
         String headerTitle = (String) getGroup(groupPosition);
         if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this._context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater infalInflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.list_group, null);
         }
 
-        TextView lblListHeader = (TextView) convertView
-                .findViewById(R.id.lblListHeader);
-        lblListHeader.setText(headerTitle);
+        TextView lblListHeader = (TextView) convertView.findViewById(R.id.lblListHeader);
+        lblListHeader.setTypeface(null, Typeface.BOLD);
+        lblListHeader.setText(headerTitle + " ( "+getChildrenCount(groupPosition)+" )");
 
         return convertView;
     }

@@ -9,9 +9,6 @@ import android.widget.TextView;
 import com.andre3.smartshopperslist.R;
 import com.andre3.smartshopperslist.models.StoreMdl;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,7 +47,7 @@ public class StoreAdpr extends BaseAdapter{
 
         View v = View.inflate(context, R.layout.store_adpr_view, null);
 
-        TextView store_nm = (TextView)v.findViewById(R.id.store_title);
+        TextView store_nm = (TextView)v.findViewById(R.id.lblListItem);
         store_nm.setText(storeObj.get(position).getStoreName());
 
         return v;
