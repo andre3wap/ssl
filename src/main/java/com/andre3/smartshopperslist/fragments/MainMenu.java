@@ -19,8 +19,11 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.andre3.smartshopperslist.R;
+import com.andre3.smartshopperslist.adapters.CategoryAdpr;
 import com.andre3.smartshopperslist.adapters.StoreAdpr;
+import com.andre3.smartshopperslist.impl.CreateCatImpl;
 import com.andre3.smartshopperslist.impl.CreateStoreImpl;
+import com.andre3.smartshopperslist.models.CategoryMdl;
 import com.andre3.smartshopperslist.models.StoreMdl;
 import com.andre3.smartshopperslist.views.PopupBuilder;
 
@@ -45,29 +48,37 @@ public class MainMenu extends Fragment {
         ListView lv = (ListView)view.findViewById(R.id.ListV);
 
         // Objects
-        StoreMdl data = new StoreMdl(null, null, null, 0);
-       final CreateStoreImpl dao = new CreateStoreImpl(getContext(), data);
-
+        StoreMdl datam = new StoreMdl(null, null, null, 0);
+       final CreateStoreImpl db = new CreateStoreImpl(getContext(), datam);
+        db.readData();
 
         // Populate adapter + Listview with data
-        StoreAdpr adapter = new StoreAdpr(getContext(),dao.readData());
+        ///StoreAdpr adapter = new StoreAdpr(getContext(),dao.readData());
+       //// lv.setAdapter(adapter);
+
+        CategoryMdl data = new CategoryMdl(0, "Cat Name");
+        final CreateCatImpl dao = new CreateCatImpl(getContext(), data);
+        CategoryAdpr adapter = new CategoryAdpr(getContext(), dao.readData() );
         lv.setAdapter(adapter);
-        
 
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                System.out.println("Position: " + dao.readData().get(position).getStoreId());
-
-                CreateCategory csf = new CreateCategory();
+                CreateList csf = new CreateList();
 
                 FragmentTransaction tran = getFragmentManager().beginTransaction();
 
+                ///Bundle bundle = new Bundle();
+                ///bundle.putInt("store_id", dao.readData().get(position).getStoreId());
+                ///csf.setArguments(bundle);
+
+
                 Bundle bundle = new Bundle();
-                bundle.putInt("store_id", dao.readData().get(position).getStoreId());
+                bundle.putInt("cat_id", dao.readData().get(position).getCatId());
                 csf.setArguments(bundle);
+
                 tran.replace(R.id.fragment_container, csf, "Test_tag").addToBackStack(null).commit();
 
 

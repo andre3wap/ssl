@@ -219,7 +219,7 @@ public class PopupBuilder {
 
                 // Save data to database
                     AddItemMdl data = new  AddItemMdl( 1, item_txt1.getText().toString(), Integer.parseInt(item_txt3.getText().toString()),
-                            item_txt5.getText().toString(), (float)Integer.parseInt(item_txt2.getText().toString()), "Medium",
+                            item_txt5.getText().toString(), (float)Float.parseFloat(item_txt2.getText().toString()), "Medium",
                             (float)Integer.parseInt(item_txt4.getText().toString()), Integer.parseInt(spinnerSPlt3[0]), Integer.parseInt(spinnerSPlt4[0]), Integer.parseInt(spinnerSPlt5[0]));
                     CreateItemImpl db = new CreateItemImpl(getContext(), data);
                 db.save();

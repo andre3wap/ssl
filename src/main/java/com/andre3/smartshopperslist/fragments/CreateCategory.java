@@ -47,11 +47,6 @@ public class CreateCategory extends Fragment{
 
                 FragmentTransaction tran = getFragmentManager().beginTransaction();
 
-                Bundle bundle = new Bundle();
-                bundle.putInt("store_id", bd.getInt("store_id"));
-                bundle.putInt("cat_id", db.readData().get(position).getCatId());
-                cl.setArguments(bundle);
-
                 tran.replace(R.id.fragment_container, cl).addToBackStack(null).commit();
 
 
