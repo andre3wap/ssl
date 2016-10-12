@@ -11,12 +11,12 @@ public class AddItemMdl {
     String isle;
     Float cost;
     String size;
-    Float weight;
+    String weight;
     Integer store;
     Integer listtype;
     Integer cat;
 
-    public AddItemMdl(Integer itemId, String name, Integer qty, String isle, Float cost, String size, Float weight, Integer store, Integer listtype, Integer cat) {
+    public AddItemMdl(Integer itemId, String name, Integer qty, String isle, Float cost, String size, String weight, Integer store, Integer listtype, Integer cat) {
         this.itemId = itemId;
         this.name = name;
         this.qty = qty;
@@ -77,11 +77,11 @@ public class AddItemMdl {
         this.size = size;
     }
 
-    public Float getWeight() {
+    public String getWeight() {
         return weight;
     }
 
-    public void setWeight(Float weight) {
+    public void setWeight(String weight) {
         this.weight = weight;
     }
 

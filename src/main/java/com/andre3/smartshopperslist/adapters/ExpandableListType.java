@@ -1,8 +1,12 @@
 package com.andre3.smartshopperslist.adapters;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +15,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.andre3.smartshopperslist.R;
+import com.andre3.smartshopperslist.fragments.CreateList;
+import com.andre3.smartshopperslist.impl.CreateItemImpl;
+import com.andre3.smartshopperslist.models.AddItemMdl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +38,8 @@ public class ExpandableListType extends BaseExpandableListAdapter {
     TextView qty_tv;
     int i = 1;
     int pos;
+    boolean upd;
+    CreateItemImpl impl, impl2;
 
      ArrayList arr = new ArrayList();
     public ExpandableListType(Context context, List<String> listDataHeader,
@@ -64,10 +73,12 @@ public class ExpandableListType extends BaseExpandableListAdapter {
 
 
 
-        TextView txtListChild1 = (TextView) convertView.findViewById(R.id.lblListItem);
+        final TextView txtListChild1 = (TextView) convertView.findViewById(R.id.lblListItem);
        final TextView txtListChild2 = (TextView) convertView.findViewById(R.id.price_tv);
        final TextView txtListChild3 = (TextView) convertView.findViewById(R.id.qty_tv);
         TextView txtListChild4 = (TextView) convertView.findViewById(R.id.isle_tv);
+        TextView txtListChild5 = (TextView) convertView.findViewById(R.id.store_tv);
+
 
 
         ///Format: id/name/price/qty/isle
@@ -80,17 +91,63 @@ public class ExpandableListType extends BaseExpandableListAdapter {
             Float priceInt = Float.parseFloat(childTitle[2]) * qtyInt;
             txtListChild2.setText("$" + priceInt);
         }if(!childTitle[3].isEmpty()){
-            txtListChild3.setText("Quantity: " +childTitle[3]);
+            txtListChild3.setText("Q: " +childTitle[3]);
         }if(!childTitle[4].isEmpty()){
             txtListChild4.setText("Isle: " +childTitle[4]);
+        }if(!childTitle[5].isEmpty()){
+            txtListChild5.setText(" > " +childTitle[5]);
         }
 
 
         final ImageButton inQty = (ImageButton)convertView.findViewById(R.id.increaseQty);
+        inQty.setFocusable(false);
         inQty.setTag(childTitle[0]);
+
+        final ImageButton inCart = (ImageButton)convertView.findViewById(R.id.cart_btn);
+        inCart.setFocusable(false);
 
         qty_tv = (TextView)convertView.findViewById(R.id.qty_tv);
         qty_tv.setTag(childTitle[0]);
+
+
+
+        // Mark item as being in the cart and update DB flag..
+
+
+        AddItemMdl data = new AddItemMdl(0,"",0,"",(float)0, "", "", 0, 0,0);
+        impl2 = new CreateItemImpl(_context, data);
+
+        inCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                String inCartStr;
+
+                if(impl2.readItemData(Integer.parseInt(childTitle[0])).get(0).getWeight().toString().equals("yes"))
+                {
+                    upd = false;
+                     inCartStr = "no";
+                    txtListChild1.setPaintFlags(txtListChild1.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
+                }else {
+                    upd = true;
+                     inCartStr = "yes";
+                    txtListChild1.setPaintFlags(txtListChild1.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                }
+
+                    // Update the row in the DB
+                    AddItemMdl data2 = new AddItemMdl(Integer.parseInt(childTitle[0]), "", -0, "", (float) 0, "", inCartStr, 0, 0, 0);
+                    impl2 = new CreateItemImpl(_context, data2);
+                    int count = impl2.update();
+
+            }
+        });
+
+        if(impl2.readItemData(Integer.parseInt(childTitle[0])).get(0).getWeight().toString().equals("yes")) {
+
+            txtListChild1.setPaintFlags(txtListChild1.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }
+
 
         inQty.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,13 +172,18 @@ public class ExpandableListType extends BaseExpandableListAdapter {
                 }
 
                 //TODO: might need later to get itemID
-                String[] qty = qty_tv.getText().toString().split(":");
+                String[] itemTitle = txtListChild1.getText().toString().split("-");
 
                 // Calculating Quantity and price
-                Integer qtyInt = Integer.parseInt(childTitle[3]) + i;
-                Float priceInt = Float.parseFloat(childTitle[2]) * qtyInt;
-                txtListChild3.setText("Quantity: " + qtyInt);
+                Integer qtyInt = Integer.parseInt(childTitle[3].trim())+i;
+                Float priceInt = Float.parseFloat(childTitle[2].trim())*qtyInt;
+                txtListChild3.setText("Q: " + qtyInt);
                 txtListChild2.setText("$" + priceInt);
+
+                // Update the row in the DB
+                AddItemMdl data = new AddItemMdl(Integer.parseInt(itemTitle[0].trim()),"",qtyInt,"",(float)0, "", "", 0, 0,0);
+                 impl = new CreateItemImpl(_context, data);
+               int count=  impl.update();
 
                 i++;
             }

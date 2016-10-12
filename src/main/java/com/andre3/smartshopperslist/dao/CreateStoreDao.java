@@ -60,7 +60,7 @@ public class CreateStoreDao extends SQLiteOpenHelper {
                     COLUMN_ISLE + " TEXT," +
                     COLUMN_COST + " FLOAT," +
                     COLUMN_SIZE + " TEXT," + //SMALL/MEDIUM
-                    COLUMN_WEIGHT + " FLOAT," +
+                    COLUMN_WEIGHT + " STRING," +
                     COLUMN_STORE + " INTEGER," +
                     COLUMN_LISTTYPE + "INTEGER," +
                     COLUMN_CAT +" "+  TEXT_TYPE1+")";

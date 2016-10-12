@@ -35,6 +35,9 @@ public class PopupBuilder {
     Context context;
     String dialogTitle;
     String popupType;
+    EditText item_txt1, item_txt2, item_txt3, item_txt4, item_txt5;
+    CreateItemImpl item_db;
+    AddItemMdl item_data;
 
     public PopupBuilder(Context context, String dialogTitle, String popupType) {
         this.context = context;
@@ -82,10 +85,9 @@ public class PopupBuilder {
                 EditText store_txt1, store_txt2, store_txt3;
                 store_txt1 = (EditText)dialog.findViewById(R.id.store_txt1);
                 store_txt2 = (EditText)dialog.findViewById(R.id.store_txt2);
-                store_txt3 = (EditText)dialog.findViewById(R.id.store_txt3);
 
                 // Save data to database
-                StoreMdl data = new StoreMdl(store_txt1.getText().toString(), store_txt2.getText().toString(), store_txt3.getText().toString(), 0);
+                StoreMdl data = new StoreMdl(store_txt1.getText().toString(), store_txt2.getText().toString(), "", 0);
                 CreateStoreImpl dao = new CreateStoreImpl(context, data);
                 long id = dao.save();
 
@@ -175,7 +177,7 @@ public class PopupBuilder {
         return dialog;
     }
 
-    public Dialog displyItemForm() {
+    public Dialog displyItemForm(final Boolean saveData, final int itemId) {
         final Dialog dialog = new Dialog(this.context);
         this.loadLayout(dialog);
         dialog.setTitle(this.dialogTitle);
@@ -183,12 +185,28 @@ public class PopupBuilder {
         final Spinner spinner2, spinner3, spinner4, spinner5;
         Button btn;
 
+
         btn = (Button)dialog.findViewById(R.id.button6);
-        spinner2 = (Spinner) dialog.findViewById(R.id.spinner2);
         spinner3 = (Spinner) dialog.findViewById(R.id.spinner3);
         spinner4 = (Spinner) dialog.findViewById(R.id.spinner4);
         spinner5 = (Spinner) dialog.findViewById(R.id.spinner5);
 
+        item_txt1 = (EditText)dialog.findViewById(R.id.item_txt1);
+        item_txt2 = (EditText)dialog.findViewById(R.id.item_txt2);
+        item_txt3 = (EditText)dialog.findViewById(R.id.item_txt3);
+        item_txt5 = (EditText)dialog.findViewById(R.id.item_txt5);
+
+        // If saveData returns true then populate form fields with values from DB, if not, proceed with regular data collection.
+        if(saveData){
+
+            AddItemMdl data = new  AddItemMdl( 0, "name", 9, "isle", (float)5.9, "", "", 0, 8, 6);
+            CreateItemImpl db = new CreateItemImpl(getContext(), data);
+
+            item_txt1.setText(db.readItemData(itemId).get(0).getName());
+            item_txt2.setText(db.readItemData(itemId).get(0).getCost().toString());
+            item_txt3.setText(db.readItemData(itemId).get(0).getQty().toString());
+            item_txt5.setText(db.readItemData(itemId).get(0).getIsle());
+        }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, readStore());
         spinner3.setAdapter(adapter);
@@ -205,12 +223,8 @@ public class PopupBuilder {
             public void onClick(View v) {
 
                 // Get data from form
-                EditText item_txt1, item_txt2, item_txt3, item_txt4, item_txt5;
-                item_txt1 = (EditText)dialog.findViewById(R.id.item_txt1);
-                item_txt2 = (EditText)dialog.findViewById(R.id.item_txt2);
-                item_txt3 = (EditText)dialog.findViewById(R.id.item_txt3);
-                item_txt4 = (EditText)dialog.findViewById(R.id.item_txt4);
-                item_txt5 = (EditText)dialog.findViewById(R.id.item_txt5);
+
+
 
                 ////String[] spinnerSPlt2 = spinner2.getSelectedItem().toString().split("-");
                 String[] spinnerSPlt3 = spinner3.getSelectedItem().toString().split("-");
@@ -218,11 +232,18 @@ public class PopupBuilder {
                 String[] spinnerSPlt5 = spinner5.getSelectedItem().toString().split("-");
 
                 // Save data to database
-                    AddItemMdl data = new  AddItemMdl( 1, item_txt1.getText().toString(), Integer.parseInt(item_txt3.getText().toString()),
-                            item_txt5.getText().toString(), (float)Float.parseFloat(item_txt2.getText().toString()), "Medium",
-                            (float)Integer.parseInt(item_txt4.getText().toString()), Integer.parseInt(spinnerSPlt3[0]), Integer.parseInt(spinnerSPlt4[0]), Integer.parseInt(spinnerSPlt5[0]));
-                    CreateItemImpl db = new CreateItemImpl(getContext(), data);
-                db.save();
+                item_data = new  AddItemMdl( itemId, item_txt1.getText().toString(), Integer.parseInt(item_txt3.getText().toString()),
+                            item_txt5.getText().toString(), (float)Float.parseFloat(item_txt2.getText().toString()), "",
+                            "", Integer.parseInt(spinnerSPlt3[0]), Integer.parseInt(spinnerSPlt4[0]), Integer.parseInt(spinnerSPlt5[0]));
+                item_db = new CreateItemImpl(getContext(), item_data);
+
+                if(saveData) {
+                    item_db.update();
+                    System.out.println("updated");
+                }else {
+                    item_db.save();
+                    System.out.println("inserted");
+                }
 
                 dialog.dismiss();
             }

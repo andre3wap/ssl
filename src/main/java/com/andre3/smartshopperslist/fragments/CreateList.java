@@ -1,5 +1,6 @@
 package com.andre3.smartshopperslist.fragments;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -22,8 +23,10 @@ import com.andre3.smartshopperslist.adapters.ExpandableListType;
 import com.andre3.smartshopperslist.adapters.ListTypeAdpr;
 import com.andre3.smartshopperslist.impl.CreateItemImpl;
 import com.andre3.smartshopperslist.impl.CreateListTypeImpl;
+import com.andre3.smartshopperslist.impl.CreateStoreImpl;
 import com.andre3.smartshopperslist.models.AddItemMdl;
 import com.andre3.smartshopperslist.models.ListTypeMdl;
+import com.andre3.smartshopperslist.models.StoreMdl;
 import com.andre3.smartshopperslist.views.PopupBuilder;
 
 import java.lang.reflect.Array;
@@ -65,7 +68,12 @@ public class CreateList  extends Fragment {
                 /// listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition)
                 /// listDataHeader.get(groupPosition)
 
-                System.out.println("Clicked" + listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition));
+                ///System.out.println("Clicked" + listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition));
+
+                String[] itemId = listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).split("/");
+                PopupBuilder dialog = new PopupBuilder(getContext(), "Update an Item", "item");
+                dialog.displyItemForm(true, Integer.parseInt(itemId[0])).show();
+
 
                 return false;
             }
@@ -84,15 +92,22 @@ public class CreateList  extends Fragment {
         ListTypeMdl data = new ListTypeMdl(0, "List Type", 0);
         final CreateListTypeImpl db = new CreateListTypeImpl(getContext(), data);
 
+        //Open a blank store Object
+        StoreMdl storeObj = new StoreMdl("Test Store", "6096496891", "Willingboro, NJ", 0);
+        final CreateStoreImpl dao = new CreateStoreImpl(getContext(), storeObj);
+
+
+
         final Bundle bd = getArguments();
 
         List<List<String>> lists = new ArrayList<List<String>>();
         int i = 0;
+        CreateItemImpl items;
 
         for(ListTypeMdl temp: db.readData(bd.getInt("cat_id"))) {
 
-            AddItemMdl itemDb = new  AddItemMdl( 0, "name", 9, "isle", (float)5.9, "", (float)12.5, 0, 8, 6);
-            CreateItemImpl items = new CreateItemImpl(getContext(), itemDb);
+            AddItemMdl itemDb = new  AddItemMdl( 0, "name", 9, "isle", (float)5.9, "", "", 0, 8, 6);
+           items = new CreateItemImpl(getContext(), itemDb);
 
 
             List<String> list = new ArrayList<>();
@@ -101,14 +116,17 @@ public class CreateList  extends Fragment {
 
             for(AddItemMdl listTemp : items.readData(temp.getListId())) {
                 ///Format: id/name/price/qty/isle
-                String childData = listTemp.getItemId()+"/"+listTemp.getName().toString()+"/"+listTemp.getCost()+"/"+listTemp.getQty()+"/"+listTemp.getIsle();
+               String store_name =  dao.readDataById(listTemp.getStore()).get(0).getStoreName();
+                String childData = listTemp.getItemId()+"/"+listTemp.getName().toString()+"/"+listTemp.getCost()+"/"+listTemp.getQty()+"/"+listTemp.getIsle()+"/"+store_name;
                 lists.get(i).add(childData);
+
             }
 
             listDataHeader.add(temp.getName());
             listDataChild.put(temp.getName(),  lists.get(i));
             i++;
         }
+
 
     }
 
@@ -130,11 +148,20 @@ public class CreateList  extends Fragment {
     }
 
 
+    public void refreshFrag()
+    {
+
+        CreateList cl = new CreateList();
+
+        FragmentTransaction tran = getFragmentManager().beginTransaction();
+
+        tran.replace(R.id.fragment_container, cl).addToBackStack(null).commit();
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         PopupBuilder dialog = new PopupBuilder(getContext(), "Add an Item", "item");
-        dialog.displyItemForm().show();
+        dialog.displyItemForm(false, 0).show();
         return false;
     }
 }

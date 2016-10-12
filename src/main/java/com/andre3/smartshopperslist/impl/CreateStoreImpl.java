@@ -71,6 +71,34 @@ public class CreateStoreImpl {
 
         return stores;
     }
+
+    public ArrayList<StoreMdl> readDataById(int storeId)
+    {
+
+        ArrayList<StoreMdl> stores = new ArrayList<StoreMdl>();
+        String selectQuery = "SELECT  * FROM " + TABLE_NAME + " WHERE _id="+ storeId;
+
+        SQLiteDatabase dbw = db.getReadableDatabase();
+        Cursor c = dbw.rawQuery(selectQuery, null);
+
+        if(c.moveToFirst())
+        {
+            do{
+                StoreMdl model = new StoreMdl(null, null, null, 0);
+
+                model.setStoreId(c.getInt(c.getColumnIndex("_id")));
+                model.setStoreLcn(c.getString(c.getColumnIndex("address")));
+                model.setStoreName(c.getString(c.getColumnIndex("name")));
+                model.setStoreNo(c.getString(c.getColumnIndex("phone")));
+
+                stores.add(model);
+            }while(c.moveToNext());
+        }
+
+
+        return stores;
+    }
+
     public void update()
     {
 

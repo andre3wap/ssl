@@ -33,7 +33,7 @@ public class AddListItem extends Fragment {
         forceShowActionBarOverflowMenu();
         setHasOptionsMenu(true);
 
-        AddItemMdl data = new  AddItemMdl( 0, "name", 9, "isle", (float)5.9, "", (float)12.5, 0, 8, 6);
+        AddItemMdl data = new  AddItemMdl( 0, "name", 9, "isle", (float)5.9, "", "", 0, 8, 6);
         CreateItemImpl db = new CreateItemImpl(getContext(), data);
         ///db.save();
 
@@ -78,7 +78,7 @@ public class AddListItem extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         PopupBuilder dialog = new PopupBuilder(getContext(), "Add an Item", "item");
-        dialog.displyItemForm().show();
+        dialog.displyItemForm(false, 0).show();
         return false;
     }
 }

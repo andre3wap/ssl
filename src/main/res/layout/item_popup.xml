@@ -4,7 +4,7 @@
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="10dp">
 
         <TableRow
@@ -61,44 +61,6 @@
                 android:text="1"
                 android:ems="10"
                 android:id="@+id/item_txt3" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <TextView
-                android:text="Size:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView16"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp" />
-
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/spinner2" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:text="Weight:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView16" />
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:text="1lb"
-                android:ems="10"
-                android:id="@+id/item_txt4" />
         </TableRow>
 
         <TableRow
@@ -165,7 +127,6 @@
                 android:text="Category:"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView16"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp" />
 
@@ -175,17 +136,24 @@
                 android:id="@+id/spinner5" />
 
         </TableRow>
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView6" />
+
+            <Button
+                android:text="Save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button6" />
+        </TableRow>
+
     </TableLayout>
 
-    <Button
-        android:text="Add Item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="122dp"
-        android:layout_marginStart="122dp"
-        android:layout_marginBottom="109dp"
-        android:id="@+id/button6"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
 </RelativeLayout>
