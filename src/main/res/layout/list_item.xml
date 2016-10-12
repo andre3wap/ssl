@@ -4,7 +4,7 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/lblListItem"
         android:layout_alignParentTop="true"
@@ -14,21 +14,6 @@
         android:layout_marginLeft="15dp"
         android:textSize="15sp"
         android:textStyle="normal|bold" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/price_tv"
-        android:paddingLeft="5dp"
-        android:paddingBottom="5dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_alignTop="@+id/lblListItem"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:textStyle="normal|bold"
-        android:textColor="@android:color/holo_green_dark" />
 
 
     <TextView
@@ -56,6 +41,7 @@
         android:layout_marginLeft="25dp"
         android:layout_marginStart="25dp" />
 
+
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -63,7 +49,45 @@
         android:layout_below="@+id/price_tv"
         android:layout_alignRight="@+id/price_tv"
         android:layout_alignEnd="@+id/price_tv"
+        android:descendantFocusability="blocksDescendants"
         android:id="@+id/increaseQty" />
+
+    <TextView
+        android:text=">  Walmart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/store_tv"
+        android:layout_alignBaseline="@+id/qty_tv"
+        android:layout_alignBottom="@+id/qty_tv"
+        android:layout_toRightOf="@+id/qty_tv"
+        android:layout_toEndOf="@+id/qty_tv"
+        android:layout_marginLeft="20dp" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/price_tv"
+        android:paddingLeft="5dp"
+        android:paddingBottom="5dp"
+        android:textStyle="normal|bold"
+        android:textColor="@android:color/holo_green_dark"
+        android:layout_alignTop="@+id/lblListItem"
+        android:layout_toRightOf="@+id/store_tv"
+        android:layout_toEndOf="@+id/store_tv"
+        android:layout_marginLeft="32dp"
+        android:layout_marginStart="32dp" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shopping_cart2"
+        android:layout_alignTop="@+id/price_tv"
+        android:layout_toRightOf="@+id/price_tv"
+        android:layout_toEndOf="@+id/price_tv"
+        android:id="@+id/imageButton"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="4dp" />
 
 
 </RelativeLayout>
