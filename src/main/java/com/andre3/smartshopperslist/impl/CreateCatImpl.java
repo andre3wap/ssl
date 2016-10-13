@@ -103,7 +103,12 @@ public class CreateCatImpl {
         return count;
 
     }
-    public void delete() {
+    public void delete(){
 
+        SQLiteDatabase delete = db.getReadableDatabase();
+        delete.delete(TABLE_NAME, "WHERE _id = ?", new String[] {Integer.toString( catObj.getCatId())});
+        delete.delete("items", "WHERE cat_id = ?", new String[] {Integer.toString( catObj.getCatId())});
+        delete.delete("list_type", "WHERE cat_id = ?", new String[] {Integer.toString( catObj.getCatId())});
+        delete.close();
     }
 }

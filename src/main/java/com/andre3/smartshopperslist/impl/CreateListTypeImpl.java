@@ -95,8 +95,12 @@ public class CreateListTypeImpl {
     public void update(){
 
     }
-    public void delete(){
+   public void delete() {
 
+        SQLiteDatabase delete = db.getReadableDatabase();
+         delete.delete(TABLE_NAME, "WHERE _id = ?", new String[] {Integer.toString( listtypeObj.getListId())});
+         delete.delete("items", "WHERE listtype = ?", new String[] {Integer.toString( listtypeObj.getListId())});
+        delete.close();
     }
 
 }

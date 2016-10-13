@@ -207,5 +207,12 @@ public class CreateItemImpl {
         return items;
     }
 
+    public void delete(){
+
+        SQLiteDatabase delete = db.getReadableDatabase();
+        delete.delete(TABLE_NAME, "WHERE _id = ?", new String[] {Integer.toString( itemMdl.getItemId())});
+        delete.close();
+    }
+
 
 }

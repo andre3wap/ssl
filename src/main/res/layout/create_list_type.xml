@@ -4,7 +4,7 @@
     android:padding="20dp">
 
     <TextView
-        android:text="List Type (eg. Meat, Snacks)"
+        android:text="List Type (eg. Meats, Toiletries)"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -14,7 +14,7 @@
         android:layout_alignParentStart="true" />
 
     <TextView
-        android:text="Choose Category:"
+        android:text="Choose Section:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="31dp"

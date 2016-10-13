@@ -21,10 +21,12 @@ public class CategoryAdpr extends BaseAdapter {
 
     Context context;
     ArrayList<CategoryMdl> catObj;
+    CategoryAdpr adpr;
 
     public CategoryAdpr(Context context, ArrayList<CategoryMdl> catObj) {
         this.context = context;
         this.catObj = catObj;
+        this.adpr = this;
     }
 
     @Override
@@ -54,6 +56,7 @@ public class CategoryAdpr extends BaseAdapter {
         cat_edit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
 
                 PopupBuilder dialog1 = new PopupBuilder(context, "Update Category", "cat");
                 dialog1.displyCatForm(true, catObj.get(position).getCatId()).show();

@@ -9,7 +9,7 @@
         android:padding="20dp">
 
         <TextView
-            android:text="Category Name: (eg. Supermarket, Hardware)"
+            android:text="Section: (eg. Groceries, Hygene)"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView8" />

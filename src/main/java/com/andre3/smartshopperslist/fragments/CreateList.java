@@ -56,7 +56,7 @@ public class CreateList  extends Fragment {
         prepareListData();
 
 
-        ExpandableListType listAdapter = new ExpandableListType(getContext(), listDataHeader, listDataChild);
+        final ExpandableListType listAdapter = new ExpandableListType(getContext(), listDataHeader, listDataChild);
         expListView.setAdapter(listAdapter);
 
         expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
@@ -73,6 +73,7 @@ public class CreateList  extends Fragment {
                 String[] itemId = listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).split("/");
                 PopupBuilder dialog = new PopupBuilder(getContext(), "Update an Item", "item");
                 dialog.displyItemForm(true, Integer.parseInt(itemId[0])).show();
+                listAdapter.notifyDataSetChanged();
 
 
                 return false;

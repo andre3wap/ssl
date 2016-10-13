@@ -2,6 +2,7 @@ package com.andre3.smartshopperslist.impl;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.preference.TwoStatePreference;
@@ -99,13 +100,28 @@ public class CreateStoreImpl {
         return stores;
     }
 
-    public void update()
-    {
+    public int update() {
 
+        SQLiteDatabase update = db.getReadableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("name", storeObj.getStoreName());
+        values.put("address", storeObj.getStoreLcn());
+
+        int count = update.update(
+                TABLE_NAME,
+                values,
+                " _id ="+storeObj.getStoreId(),
+                null);
+
+        update.close();
+
+        return count;
     }
 
-    public void delete()
-    {
+    public void delete() {
 
+        SQLiteDatabase delete = db.getReadableDatabase();
+        delete.delete(TABLE_NAME, "WHERE _id = ?", new String[] {Integer.toString( storeObj.getStoreId())});
     }
 }

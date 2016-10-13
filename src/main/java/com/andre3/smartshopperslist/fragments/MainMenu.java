@@ -35,6 +35,8 @@ import java.lang.reflect.Field;
  */
 public class MainMenu extends Fragment {
 
+    CategoryAdpr adapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -58,7 +60,7 @@ public class MainMenu extends Fragment {
 
         CategoryMdl data = new CategoryMdl(0, "Cat Name");
         final CreateCatImpl dao = new CreateCatImpl(getContext(), data);
-        CategoryAdpr adapter = new CategoryAdpr(getContext(), dao.readData() );
+         adapter = new CategoryAdpr(getContext(), dao.readData() );
         lv.setAdapter(adapter);
 
 
@@ -113,7 +115,7 @@ public class MainMenu extends Fragment {
 
             case R.id.action_store:
                 PopupBuilder dialog = new PopupBuilder(getContext(), "Create a Store", "store");
-                dialog.displyStoreForm().show();
+                dialog.displyStoreForm(false, 0).show();
                 break;
 
             case R.id.action_cat:
@@ -122,7 +124,7 @@ public class MainMenu extends Fragment {
                 break;
             case R.id.action_list:
                 PopupBuilder dialog2 = new PopupBuilder(getContext(), "Create an Item List", "list");
-                dialog2.displyListForm().show();
+                dialog2.displyListForm(false, 0).show();
                 break;
         }
         return false;
