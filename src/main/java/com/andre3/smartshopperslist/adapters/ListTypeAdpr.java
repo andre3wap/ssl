@@ -45,10 +45,10 @@ public class ListTypeAdpr extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        View v = View.inflate(context, R.layout.listtype_adpr_view, null);
-        TextView type_nm = (TextView)v.findViewById(R.id.type_title);
-        type_nm.setText(listtypeObj.get(position).getName());
+        ///View v = View.inflate(context, R.layout.listtype_adpr_view, null);
+        //TextView type_nm = (TextView)v.findViewById(R.id.type_title);
+        ///type_nm.setText(listtypeObj.get(position).getName());
 
-        return v;
+        return null;
     }
 }

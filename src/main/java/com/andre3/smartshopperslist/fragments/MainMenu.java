@@ -118,7 +118,7 @@ public class MainMenu extends Fragment {
 
             case R.id.action_cat:
                 PopupBuilder dialog1 = new PopupBuilder(getContext(), "Create a Category", "cat");
-                dialog1.displyCatForm().show();
+                dialog1.displyCatForm(false, 0).show();
                 break;
             case R.id.action_list:
                 PopupBuilder dialog2 = new PopupBuilder(getContext(), "Create an Item List", "list");

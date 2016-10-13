@@ -4,10 +4,12 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.andre3.smartshopperslist.R;
 import com.andre3.smartshopperslist.models.CategoryMdl;
+import com.andre3.smartshopperslist.views.PopupBuilder;
 
 import java.util.ArrayList;
 
@@ -41,10 +43,23 @@ public class CategoryAdpr extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         View v = View.inflate(context, R.layout.cat_adpr_view, null);
         TextView cat_nm = (TextView)v.findViewById(R.id.cat_title);
+
+        ImageButton cat_edit_btn = (ImageButton)v.findViewById(R.id.cat_edit_btn);
+        cat_edit_btn.setFocusable(false);
+
+        cat_edit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                PopupBuilder dialog1 = new PopupBuilder(context, "Update Category", "cat");
+                dialog1.displyCatForm(true, catObj.get(position).getCatId()).show();
+            }
+        });
+
         cat_nm.setText(catObj.get(position).getName());
 
         return v;

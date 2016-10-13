@@ -2,16 +2,11 @@ package com.andre3.smartshopperslist.views;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.text.Layout;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.andre3.smartshopperslist.R;
@@ -51,7 +46,7 @@ public class PopupBuilder {
         switch(this.popupType)
         {
             case"list":
-                dialog.setContentView(R.layout.popup_layout1);
+                dialog.setContentView(R.layout.create_list_type);
                 break;
 
             case "cat":
@@ -97,25 +92,43 @@ public class PopupBuilder {
         return dialog;
     }
 
-    public Dialog displyCatForm() {
+    public Dialog displyCatForm(final Boolean saveData, final int catId) {
        final Dialog dialog = new Dialog(this.context);
         this.loadLayout(dialog);
         dialog.setTitle(this.dialogTitle);
 
+        // Get data from form
+        final EditText cat_txt1;
+        cat_txt1 = (EditText)dialog.findViewById(R.id.cat_txt1);
+
         Button btn = (Button)dialog.findViewById(R.id.button2);
 
+        if(saveData) {
+
+            CategoryMdl data = new CategoryMdl(0, "");
+            final CreateCatImpl db = new CreateCatImpl(context, data);
+            cat_txt1.setText(db.readDataById(catId).get(0).getName().toString());
+        }
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                // Get data from form
-                EditText cat_txt1;
-                cat_txt1 = (EditText)dialog.findViewById(R.id.cat_txt1);
 
-                // Save data to database
-                CategoryMdl data = new CategoryMdl(0, cat_txt1.getText().toString());
-                final CreateCatImpl db = new CreateCatImpl(context, data);
-                db.save();
+
+                if(cat_txt1.getText().toString().isEmpty()){
+                    Toast.makeText(context, "The Field should not be left blank", Toast.LENGTH_LONG).show();
+                }else {
+
+                    // Save data to database
+                    CategoryMdl data = new CategoryMdl(catId, cat_txt1.getText().toString());
+                    final CreateCatImpl db = new CreateCatImpl(context, data);
+
+                    if (saveData) {
+                        db.update();
+                    } else {
+                        db.save();
+                    }
+                }
 
                 dialog.dismiss();
 

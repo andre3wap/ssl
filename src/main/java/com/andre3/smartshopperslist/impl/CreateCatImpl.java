@@ -62,7 +62,45 @@ public class CreateCatImpl {
 
         return cats;
     }
-    public void update(){
+    public ArrayList <CategoryMdl> readDataById(int catId){
+
+        ArrayList<CategoryMdl> cats = new ArrayList<CategoryMdl>();
+        String sQuery = "SELECT * FROM " + TABLE_NAME+ " WHERE _id ="+catId;
+
+        SQLiteDatabase dbw = db.getReadableDatabase();
+        Cursor c = dbw.rawQuery(sQuery,null);
+
+        if(c.moveToFirst())
+        {
+            do{
+
+                CategoryMdl data = new CategoryMdl(0, null);
+
+                data.setCatId(c.getInt(c.getColumnIndex("_id")));
+                data.setName(c.getString(c.getColumnIndex("name")));
+
+                cats.add(data);
+            }while(c.moveToNext());
+        }
+
+        return cats;
+    }
+    public int update(){
+
+        SQLiteDatabase update = db.getReadableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("name", catObj.getName());
+
+        int count = update.update(
+                TABLE_NAME,
+                values,
+                " _id ="+catObj.getCatId(),
+                null);
+
+        update.close();
+
+        return count;
 
     }
     public void delete() {
